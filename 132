@@ -1,0 +1,33 @@
+import sys
+import random
+from PyQt6.QtWidgets import QApplication, QWidget, QPushButton, QHBoxLayout, QVBoxLayout, QLabel, QTextEdit, QListWidget, QLineEdit
+app = QApplication([])
+window = QWidget()
+window.resize(800, 600)
+
+list_countries = QListWidget()
+text_countries = QTextEdit()
+name_countries = QLineEdit()
+name_countries.setPlaceholderText('Название страны...')
+add_country_button = QPushButton('Добавить страну')
+del_country_button = QPushButton('Удалить страну')
+edit_country_button = QPushButton("Изменить страну")
+
+
+
+layout_main = QHBoxLayout()
+layout_left = QVBoxLayout()
+layout_right = QVBoxLayout()
+layout_buttons = QHBoxLayout()
+
+layout_buttons.addWidget(add_country_button)
+layout_buttons.addWidget(del_country_button)
+layout_buttons.addWidget(edit_country_button)
+
+layout_left.addWidget(list_countries)
+
+
+
+
+window.show()
+app.exec()

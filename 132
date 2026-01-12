@@ -25,8 +25,15 @@ layout_buttons.addWidget(del_country_button)
 layout_buttons.addWidget(edit_country_button)
 
 layout_left.addWidget(list_countries)
+layout_right.addWidget(text_countries)
+layout_right.addWidget(name_countries)
+layout_right.addWidget(layout_buttons)
 
+layout_main.addLayout(layout_left, 3)
+layout_main.addLayout(layout_right, 7)
+window.setLayout(layout_main)
 
+window.setStyleSheet("QWidget {background-color: grey; border: 2px dashed white; color: white; font-family: verdana; font-style: italic; font-size: 20px} QLineEdit {background-color: black}")
 
 
 window.show()

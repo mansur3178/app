@@ -1,9 +1,24 @@
 import sys
-import random
-from PyQt6.QtWidgets import QApplication, QWidget, QPushButton, QHBoxLayout, QVBoxLayout, QLabel, QTextEdit, QListWidget, QLineEdit
+import json
+from PyQt6.QtWidgets import QApplication, QWidget, QPushButton, QHBoxLayout, QVBoxLayout, QLabel, QTextEdit, QListWidget, QLineEdit 
+countries = {
+    'Россия': "Самая большая страна",
+    'Китай': 'Самая населенная страна',
+    'Казахстан': 'Самая 9 страна по площади'
+}
+
+with open('countries.json', 'w', encoding='utf-8') as file:
+    json.dum(countries, file)
+
+
+
+
+
+from PyQt6.QtWidgets import QApplication, QWidget, QPushButton, QHBoxLayout, QVBoxLayout, QLabel, QTextEdit, QListWidget, QLineEdit 
 app = QApplication([])
 window = QWidget()
 window.resize(800, 600)
+ 
 
 list_countries = QListWidget()
 text_countries = QTextEdit()
@@ -22,12 +37,13 @@ layout_buttons = QHBoxLayout()
 
 layout_buttons.addWidget(add_country_button)
 layout_buttons.addWidget(del_country_button)
-layout_buttons.addWidget(edit_country_button)
+layout_buttons.addWidget(edit_country_button)  
 
 layout_left.addWidget(list_countries)
 layout_right.addWidget(text_countries)
 layout_right.addWidget(name_countries)
-layout_right.addWidget(layout_buttons)
+layout_right.addLayout(layout_buttons)
+
 
 layout_main.addLayout(layout_left, 3)
 layout_main.addLayout(layout_right, 7)
@@ -35,6 +51,57 @@ window.setLayout(layout_main)
 
 window.setStyleSheet("QWidget {background-color: grey; border: 2px dashed white; color: white; font-family: verdana; font-style: italic; font-size: 20px} QLineEdit {background-color: black}")
 
+def add_country():
+    country = name_countries.text()
+    with open('countries.json', 'r', encoding= 'utf-8') as file:
+        countries = json.load(file)
+    countries[country] = ''
+    list_countries.clear()
+    name_countries.clear()
+    text_countries.clear()
+    for country in countries:
+        list_countries.addItem(country)
+    with open('countries.json', 'w', encoding= 'utf-8') as file:
+        json.dump(countries, file)
+
+def del_country():
+    country = list_countries.currentItem().text()
+    if country:
+        with open('countries.json', 'r', encoding= 'utf-8') as file:
+            countries = json.load(file)
+        del countries[country]
+        list_countries.clear()
+        name_countries.clear()
+        text_countries.clear()
+        for country in countries:
+            list_countries.addItem(country)
+        with open('countries.json', 'w', encoding='utf-8') as file:
+            json.dump(countries, file)
+
+def edit_country():
+    country = list_countries.currentItem().text()
+    if country:
+        with open('countries.json', 'r', encoding='utf-8') as file:
+            countries = json.load(file)
+        text = text_countries.toPlainText()
+        countries[country] = text
+        with open('countries.json', 'w', encoding='utf-8') as file:
+            json.dump(countries, file)
+
+def info_country():
+    country = list_countries.currentItem().text()
+    with open('countries.json', 'r', encoding='utf-8') as file:
+        countries = json.load(file)
+    text_country = countries[country]
+    text_countries.setText(text_country)
+
+with open('countries.json', 'r', encoding='utf-8') as file:
+    countries = json.load(file)
+    for country in countries:
+        list_countries.addItem(country)
+
+add_country_button.clicked.connect(add_country)
+edit_country_button.clicked.connect(edit_country)
 
 window.show()
 app.exec()

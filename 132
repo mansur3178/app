@@ -8,7 +8,7 @@ countries = {
 }
 
 with open('countries.json', 'w', encoding='utf-8') as file:
-    json.dum(countries, file)
+    json.dump(countries, file)
 
 
 
@@ -102,6 +102,8 @@ with open('countries.json', 'r', encoding='utf-8') as file:
 
 add_country_button.clicked.connect(add_country)
 edit_country_button.clicked.connect(edit_country)
+del_country_button.clicked.connect(del_country)
+list_countries.itemClicked.connect(info_country)
 
 window.show()
 app.exec()
